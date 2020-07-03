@@ -3,6 +3,7 @@ package com.example.Vodplay;
 public class Payment {
     private Long id;
     private Long purchaseId;
+    String payStatus;
 
     public Long getId() {
         return id;
@@ -19,4 +20,13 @@ public class Payment {
     public void setPurchaseId(Long purchaseId) {
         this.purchaseId = purchaseId;
     }
+
+	public String getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(String payStatus) {
+		this.payStatus = payStatus;
+	}
+    
 }
