@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    _PROJECT_NAME: "vodpurchase"
+    _PROJECT_NAME: "t3vodpurchase"
 
 phases:
   install:
