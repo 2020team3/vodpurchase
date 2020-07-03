@@ -38,33 +38,34 @@ public class VodPurchase {
 //	 	if()
         // 1. 주문됨 이벤트 발송
 
-//		VodPurchased vodPurchased = new VodPurchased();
-//		vodPurchased.setPurchaseId(this.getPurchaseId());
-//		vodPurchased.setVodId(this.getVodId());
-//		vodPurchased.setVodName(this.getVodName());
-//		
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		String json = null;
-//
-//		try {
-//		    json = objectMapper.writeValueAsString(vodPurchased);
-//		} catch (JsonProcessingException e) {
-//		    throw new RuntimeException("JSON format exception", e);
-//		}
-//
-//		Processor processor = VodPurchaseApplication.applicationContext.getBean(Processor.class);
-//		MessageChannel outputChannel = processor.output();
-//		
-//		outputChannel.send(MessageBuilder
-//		        .withPayload(json)
-//		        .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-//		        .build());	 
+		VodPurchased vodPurchased = new VodPurchased();
+		vodPurchased.setPurchaseId(this.getPurchaseId());
+		vodPurchased.setVodId(this.getVodId());
+		vodPurchased.setVodName(this.getVodName());
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = null;
+
+		try {
+		    json = objectMapper.writeValueAsString(vodPurchased);
+		} catch (JsonProcessingException e) {
+		    throw new RuntimeException("JSON format exception", e);
+		}
+
+		Processor processor = VodPurchaseApplication.applicationContext.getBean(Processor.class);
+		MessageChannel outputChannel = processor.output();
+		
+		outputChannel.send(MessageBuilder
+		        .withPayload(json)
+		        .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+		        .build());	 
 
 	        // 2. 결재정보 post
 		RestTemplate restTemplate = VodPurchaseApplication.applicationContext.getBean(RestTemplate.class);
-		String payUrl = "http://t3payment:8080/payments";
+		String payUrl = "http://localhost:8086/payments";
 		Payment payment = new Payment();
 		payment.setPurchaseId(this.getPurchaseId());
+		payment.setPayStatus(this.getOrderStatus());
 //		ResponseEntity<String> response = restTemplate.postForEntity(payUrl, payment, String.class);
 		restTemplate.postForEntity(payUrl, payment, String.class);
 	}		
@@ -102,6 +103,8 @@ public class VodPurchase {
 		            .withPayload(json)
 		            .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
 		            .build());
+
+			
 		}
 	}
 }
