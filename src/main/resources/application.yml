@@ -14,11 +14,45 @@ hystrix:
       execution.isolation.thread.timeoutInMilliseconds: 610
   
 spring:
+  profiles: default
   cloud:
     stream:
       kafka:
         binder:
           brokers: localhost:9092
+      bindings:
+        input:
+          group: vodplay
+          destination: team3vod
+          contentType: application/json
+        output:
+          destination: team3vod
+          contentType: application/json
+
+---
+
+
+server:
+  port: 8080
+
+
+# Feign Client
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution.isolation.thread.timeoutInMilliseconds: 610
+  
+spring:
+  profiles: docker
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: my-kafka.kafka.svc.cluster.local:9092
       bindings:
         input:
           group: vodplay
