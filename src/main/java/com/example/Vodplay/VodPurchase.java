@@ -62,7 +62,7 @@ public class VodPurchase {
 
 	        // 2. 결재정보 post
 		RestTemplate restTemplate = VodPurchaseApplication.applicationContext.getBean(RestTemplate.class);
-		String payUrl = "http://localhost:8086/payments";
+		String payUrl = "http://t3payment:8080/payments";
 		Payment payment = new Payment();
 		payment.setPurchaseId(this.getPurchaseId());
 		payment.setPayStatus(this.getOrderStatus());
